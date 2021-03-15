@@ -63,7 +63,7 @@ def put(host, flag_id, flag, vuln):
         
         send_data = {"recipe" : flag}
         session.post("http://" + host + ":" + PORT + "/addRecipe", data = send_data)
-        #print(a.text)
+        
         #die(
                 #ExitStatus.OK,
                 #f"Usage: {host} OK",
@@ -135,16 +135,20 @@ def generate_secret():
 
 def _main():
     action, *args = sys.argv[1:]
+    
     '''vuln = 0
     flag_id = rand_string(15)
     FLAGS_ID.append(flag_id)
     flag = generate_secret()
     FLAGS_ID.append(flag_id)'''
     #print("1")
+    
     try:
         if action == "check":
             host, = args
+            #print("2")
             check(host)
+            #print("ok")
         elif action == "put":
             host, flag_id, flag, vuln = args
             #host, = args
