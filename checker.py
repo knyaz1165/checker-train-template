@@ -26,8 +26,8 @@ FLAG_RE = re.compile("[a-zA-Z0-9]{31}=")
 
 def check(host):
     username = rand_string(10)
-    print(username)
-    print(hmac.new(username.encode()).hexdigest())
+    #print(username)
+    #print(hmac.new(username.encode()).hexdigest())
     try:
         send_data = {"username" : username, "password" : hmac.new(username.encode()).hexdigest()}
         session.post("http://" + host + ":" + PORT + "/signup", data = send_data)
