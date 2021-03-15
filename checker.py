@@ -35,8 +35,8 @@ def check(host):
         send_data = {"username" : username, "password" : hmac.new(username.encode()).hexdigest()}
         session.post("http://" + host + ":" + PORT + "/auth", data = send_data)
         
-        #send_data = {"recipe" : "GOOD RECIPE"}
-        #a = session.post("http://" + host + ":" + PORT + "/bar", data = send_data)
+        send_data = {"recipe" : "GOOD RECIPE"}
+        session.post("http://" + host + ":" + PORT + "/addRecipe", data = send_data)
         #print(a.text)
         
         session.get("http://" + host + ":" + PORT + "/recipes")
@@ -62,7 +62,8 @@ def put(host, flag_id, flag, vuln):
         session.post("http://" + host + ":" + PORT + "/auth", data = send_data)
         
         send_data = {"recipe" : flag}
-        session.post("http://" + host + ":" + PORT + "/bar", data = send_data)
+        a = session.post("http://" + host + ":" + PORT + "/addRecipe", data = send_data)
+        print(a.text)
         #die(
                 #ExitStatus.OK,
                 #f"Usage: {host} OK",
