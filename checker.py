@@ -39,12 +39,10 @@ def check(host):
         
         die(
                 ExitStatus.OK,
-                f"Usage: {host} check IP FLAGID FLAG",
             )
     except:
         die(
                 ExitStatus.DOWN,
-                f"Usage: {host} check IP FLAGID FLAG",
             )
     
 
@@ -61,12 +59,10 @@ def put(host, flag_id, flag, vuln):
         session.post("http://" + host + ":" + PORT + "/bar", data = send_data)
         die(
                 ExitStatus.OK,
-                f"Usage: {host} put IP FLAGID FLAG",
             )
     except:
         die(
                 ExitStatus.MUMBLE,
-                f"Usage: {host} put IP FLAGID FLAG",
             )
 
 
@@ -82,18 +78,15 @@ def get(host, flag_id, flag, vuln):
         if found_flag == flag:
             die(
                 ExitStatus.OK,
-                f"Usage: {host} get IP FLAGID FLAG",
             )
         
         else:
             die(
                 ExitStatus.CORRUPT,
-                f"Usage: {host} get IP FLAGID FLAG",
             )
     except:
         die(
             ExitStatus.MUMBLE,
-            f"Exception: {e}. Stack:\n {inspect.stack()}",
         )
 
 """ <common> """
@@ -129,12 +122,7 @@ def generate_secret():
 
 def _main():
     action, *args = sys.argv[1:]
-    '''vuln = 0
-    flag_id = rand_string(15)
-    FLAGS_ID.append(flag_id)
-    flag = generate_secret()
-    FLAGS_ID.append(flag_id)'''
-    #print("1")
+
     try:
         if action == "check":
             host, = args
@@ -142,9 +130,9 @@ def _main():
         elif action == "put":
             host, flag_id, flag, vuln = args
             #host, = args
-            print("2")
+            #print("2")
             put(host, flag_id, flag, vuln)
-            print("ok")
+            #print("ok")
         elif action == "get":
             host, flag_id, flag, vuln = args
             #host, = args
