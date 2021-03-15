@@ -62,8 +62,8 @@ def put(host, flag_id, flag, vuln):
         session.post("http://" + host + ":" + PORT + "/auth", data = send_data)
         
         send_data = {"recipe" : flag}
-        a = session.post("http://" + host + ":" + PORT + "/addRecipe", data = send_data)
-        print(a.text)
+        session.post("http://" + host + ":" + PORT + "/addRecipe", data = send_data)
+        #print(a.text)
         #die(
                 #ExitStatus.OK,
                 #f"Usage: {host} OK",
