@@ -25,12 +25,27 @@ FLAGS = []
 FLAG_RE = re.compile("[a-zA-Z0-9]{31}=")
 
 def check(host):
+    username = rand_string(10)
     
-    die(
+    try:
+        send_data = {"username" : username, "password" : hmac.new(username.encode()).hexdigest()}
+        session.post("http://" + host + ":" + PORT + "/signup", data = send_data)
+        
+        send_data = {"username" : username, "password" : hmac.new(username.encode()).hexdigest()}
+        session.post("http://" + host + ":" + PORT + "/auth", data = send_data)
+        
+        send_data = {"recipe" : "GOOD RECIPE"}
+        session.post("http://" + host + ":" + PORT + "/bar", data = send_data)
+        
+        die(
                 ExitStatus.OK,
-                f"Usage: {host} get IP FLAGID FLAG",
+                f"Usage: {host} check IP FLAGID FLAG",
             )
-    
+    except:
+        die(
+                ExitStatus.DOWN,
+                f"Usage: {host} check IP FLAGID FLAG",
+            )
     
 
 
@@ -44,6 +59,10 @@ def put(host, flag_id, flag, vuln):
         
         send_data = {"recipe" : flag}
         session.post("http://" + host + ":" + PORT + "/bar", data = send_data)
+        die(
+                ExitStatus.OK,
+                f"Usage: {host} put IP FLAGID FLAG",
+            )
     except:
         die(
                 ExitStatus.MUMBLE,
