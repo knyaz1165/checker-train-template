@@ -20,14 +20,11 @@ DEBUG = os.getenv("DEBUG", False)
 TRACE = os.getenv("TRACE", False)
 """ </config> """
 
-FLAGS_ID = []
-FLAGS = []
 FLAG_RE = re.compile("[a-zA-Z0-9]{31}=")
 
 def check(host):
     username = rand_string(10)
-    #print(username)
-    #print(hmac.new(username.encode()).hexdigest())
+
     try:
         send_data = {"username" : username, "password" : hmac.new(username.encode()).hexdigest()}
         session.post("http://" + host + ":" + PORT + "/signup", data = send_data)
@@ -40,11 +37,7 @@ def check(host):
         #print(a.text)
         
         session.get("http://" + host + ":" + PORT + "/recipes")
-        #print("ok")
-        #die(
-                #ExitStatus.OK,
-                #f"Usage: {host} check IP FLAGID FLAG",
-            #)
+        
     except:
         die(
                 ExitStatus.DOWN,
@@ -55,19 +48,15 @@ def check(host):
 
 def put(host, flag_id, flag, vuln):
     try:
-        send_data = {"username" : flag_id, "password" : hmac.new(flag_id.encode()).hexdigest()}
+        send_data = {"username" : flag_id, "password" : "12345"}
         session.post("http://" + host + ":" + PORT + "/signup", data = send_data)
         
-        send_data = {"username" : flag_id, "password" : hmac.new(flag_id.encode()).hexdigest()}
+        send_data = {"username" : flag_id, "password" : "12345"}
         session.post("http://" + host + ":" + PORT + "/auth", data = send_data)
         
         send_data = {"recipe" : flag}
         session.post("http://" + host + ":" + PORT + "/addRecipe", data = send_data)
-        
-        #die(
-                #ExitStatus.OK,
-                #f"Usage: {host} OK",
-            #)
+
     except:
         check(host)
         
@@ -88,10 +77,6 @@ def get(host, flag_id, flag, vuln):
         
         if found_flag == flag:
             pass
-            #die(
-                #ExitStatus.OK,
-                #f"Usage: {host} get IP FLAGID FLAG",
-            #)
         
         else:
             die(
@@ -137,13 +122,6 @@ def generate_secret():
 
 def _main():
     action, *args = sys.argv[1:]
-    
-    '''vuln = 0
-    flag_id = rand_string(15)
-    FLAGS_ID.append(flag_id)
-    flag = generate_secret()
-    FLAGS_ID.append(flag_id)'''
-    #print("1")
     
     try:
         if action == "check":
