@@ -37,10 +37,10 @@ def check(host):
         send_data = {"recipe" : "GOOD RECIPE"}
         session.post("http://" + host + ":" + PORT + "/bar", data = send_data)
         
-        die(
-                ExitStatus.OK,
-                f"Usage: {host} check IP FLAGID FLAG",
-            )
+        #die(
+                #ExitStatus.OK,
+                #f"Usage: {host} check IP FLAGID FLAG",
+            #)
     except:
         die(
                 ExitStatus.DOWN,
@@ -59,14 +59,14 @@ def put(host, flag_id, flag, vuln):
         
         send_data = {"recipe" : flag}
         session.post("http://" + host + ":" + PORT + "/bar", data = send_data)
-        die(
-                ExitStatus.OK,
-                f"Usage: {host} put IP FLAGID FLAG",
-            )
+        #die(
+                #ExitStatus.OK,
+                #f"Usage: {host} OK",
+            #)
     except:
         die(
                 ExitStatus.MUMBLE,
-                f"Usage: {host} put IP FLAGID FLAG",
+                f"Usage: {host} MUMBLE",
             )
 
 
@@ -80,10 +80,11 @@ def get(host, flag_id, flag, vuln):
         found_flag = FLAG_RE.findall(responce)
         
         if found_flag == flag:
-            die(
-                ExitStatus.OK,
-                f"Usage: {host} get IP FLAGID FLAG",
-            )
+            pass
+            #die(
+                #ExitStatus.OK,
+                #f"Usage: {host} get IP FLAGID FLAG",
+            #)
         
         else:
             die(
@@ -92,7 +93,7 @@ def get(host, flag_id, flag, vuln):
             )
     except:
         die(
-            ExitStatus.MUMBLE,
+            ExitStatus.COPPUPT,
             f"Exception: {e}. Stack:\n {inspect.stack()}",
         )
 
@@ -142,9 +143,9 @@ def _main():
         elif action == "put":
             host, flag_id, flag, vuln = args
             #host, = args
-            print("2")
+            #print("2")
             put(host, flag_id, flag, vuln)
-            print("ok")
+            #print("ok")
         elif action == "get":
             host, flag_id, flag, vuln = args
             #host, = args
