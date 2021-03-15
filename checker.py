@@ -26,7 +26,8 @@ FLAG_RE = re.compile("[a-zA-Z0-9]{31}=")
 
 def check(host):
     username = rand_string(10)
-    
+    print(username)
+    print(hmac.new(username.encode()).hexdigest())
     try:
         send_data = {"username" : username, "password" : hmac.new(username.encode()).hexdigest()}
         session.post("http://" + host + ":" + PORT + "/signup", data = send_data)
@@ -34,9 +35,12 @@ def check(host):
         send_data = {"username" : username, "password" : hmac.new(username.encode()).hexdigest()}
         session.post("http://" + host + ":" + PORT + "/auth", data = send_data)
         
-        send_data = {"recipe" : "GOOD RECIPE"}
-        session.post("http://" + host + ":" + PORT + "/bar", data = send_data)
+        #send_data = {"recipe" : "GOOD RECIPE"}
+        #a = session.post("http://" + host + ":" + PORT + "/bar", data = send_data)
+        #print(a.text)
         
+        session.get("http://" + host + ":" + PORT + "/recipes")
+        #print("ok")
         #die(
                 #ExitStatus.OK,
                 #f"Usage: {host} check IP FLAGID FLAG",
