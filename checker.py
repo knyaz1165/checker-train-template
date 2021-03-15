@@ -25,22 +25,34 @@ FLAGS = []
 FLAG_RE = re.compile("[a-zA-Z0-9]{31}=")
 
 def check(host):
-    print("check!")
+    
+    die(
+                ExitStatus.OK,
+                f"Usage: {host} get IP FLAGID FLAG",
+            )
     
     
 
 
 def put(host, flag_id, flag, vuln):
-    
-    send_data = {"username" : flag_id, "password" : hmac.new(flag_id.encode()).hexdigest()}
-    session.post("http://" + host + ":" + PORT + "/signup", data = send_data)
-    
-    send_data = {"username" : flag_id, "password" : hmac.new(flag_id.encode()).hexdigest()}
-    session.post("http://" + host + ":" + PORT + "/auth", data = send_data)
-    
-    send_data = {"recipe" : flag}
-    session.post("http://" + host + ":" + PORT + "/bar", data = send_data)
-    
+    try:
+        send_data = {"username" : flag_id, "password" : hmac.new(flag_id.encode()).hexdigest()}
+        session.post("http://" + host + ":" + PORT + "/signup", data = send_data)
+        
+        send_data = {"username" : flag_id, "password" : hmac.new(flag_id.encode()).hexdigest()}
+        session.post("http://" + host + ":" + PORT + "/auth", data = send_data)
+        
+        send_data = {"recipe" : flag}
+        session.post("http://" + host + ":" + PORT + "/bar", data = send_data)
+        die(
+                ExitStatus.OK,
+                f"Usage: {host} get IP FLAGID FLAG",
+            )
+    except:
+        die(
+                ExitStatus.MUMBLE,
+                f"Usage: {host} get IP FLAGID FLAG",
+            )
 
 
 def get(host, flag_id, flag, vuln):
@@ -108,30 +120,30 @@ def _main():
     #flag = generate_secret()
     #FLAGS_ID.append(flag_id)
     
-    #try:
-    if action == "check":
-        host, = args
-        check(host)
-    elif action == "put":
-        host, flag_id, flag, vuln = args
-        #host, = args
-        put(host, flag_id, flag, vuln)
-    elif action == "get":
-        host, flag_id, flag, vuln = args
-        #host, = args
-        get(host, flag_id, flag, vuln)
-    else:
-        raise IndexError
-    #except ValueError:
-        #die(
-            #ExitStatus.CHECKER_ERROR,
-            #f"Usage: {sys.argv[0]} check|put|get IP FLAGID FLAG",
-        #)
-    #except Exception as e:
-        #die(
-            #ExitStatus.CHECKER_ERROR,
-            #f"Exception: {e}. Stack:\n {inspect.stack()}",
-        #)
+    try:
+        if action == "check":
+            host, = args
+            check(host)
+        elif action == "put":
+            host, flag_id, flag, vuln = args
+            #host, = args
+            put(host, flag_id, flag, vuln)
+        elif action == "get":
+            host, flag_id, flag, vuln = args
+            #host, = args
+            get(host, flag_id, flag, vuln)
+        else:
+            raise IndexError
+    except ValueError:
+        die(
+            ExitStatus.CHECKER_ERROR,
+            f"Usage: {sys.argv[0]} check|put|get IP FLAGID FLAG",
+        )
+    except Exception as e:
+        die(
+            ExitStatus.CHECKER_ERROR,
+            f"Exception: {e}. Stack:\n {inspect.stack()}",
+        )
 
 
 """ </common> """
