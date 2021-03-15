@@ -69,6 +69,8 @@ def put(host, flag_id, flag, vuln):
                 #f"Usage: {host} OK",
             #)
     except:
+        check(host)
+        
         die(
                 ExitStatus.MUMBLE,
                 f"Usage: {host} MUMBLE",
